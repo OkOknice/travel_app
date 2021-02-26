@@ -1,168 +1,38 @@
 <template>
-  <div class="city-list">
-      <div class="area">
-        <div class="title border-topbottom">当前城市</div>
-        <div class="button-list">
-          <div class="button-wrapper">
-            <div class="button">北京</div>
+  <div class="city-list" ref="wrapper">
+    <div>
+        <div class="area">
+          <div class="title border-topbottom">当前城市</div>
+          <div class="button-list">
+            <div class="button-wrapper">
+              <div class="button">北京</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="area">
-        <div class="title border-topbottom">热门城市</div>
-        <div class="button-list">
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
-          </div>
-          <div class="button-wrapper">
-            <div class="button">北京</div>
+        <div class="area">
+          <div class="title border-topbottom">热门城市</div>
+          <div class="button-list">
+            <div
+             class="button-wrapper"
+             v-for="item of hotCities"
+             :key="item.id"
+            >
+              <div class="button">{{item.name}}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="area">
-        <div class="title border-topbottom">A</div>
-        <div class="item-list">
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-        </div>
-      </div>
-       <div class="area">
-        <div class="title border-topbottom">A</div>
-        <div class="item-list">
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-        </div>
-      </div>
-       <div class="area">
-        <div class="title border-topbottom">A</div>
-        <div class="item-list">
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
-          </div>
-          <div class="item border-bottom">
-            阿拉善盟
+        <div
+         class="area"
+         v-for="(city,key) of cities"
+         :key="key"
+        >
+          <div class="title border-topbottom">{{key}}</div>
+          <div
+           class="item-list"
+           v-for="item of city"
+           :key="item.id"
+          >
+            <div class="item border-bottom">{{item.name}}</div>
           </div>
         </div>
       </div>
@@ -171,8 +41,21 @@
 </template>
 
 <script>
+import Bscroll from 'better-scroll'
 export default {
   name: 'CityList',
+  props:{
+    hotCities:Array,
+    cities:Object
+  },
+  mounted (){
+    setTimeout(() =>{
+      this.scroll = new Bscroll(this.$refs.wrapper,{
+        movable: true,
+        zoom: true
+      })
+    })
+  }
 }
 </script>
 
