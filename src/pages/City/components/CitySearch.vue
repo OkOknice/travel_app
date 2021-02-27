@@ -3,8 +3,11 @@
     <div class="city-search">
         <input 
           class="city-search-input" 
-          type="text" placeholder="输入城市名或拼音"
+          type="text" 
+          :placeholder="placeholder"
           v-model="keyword"
+          @focus="handlerTextFocus"
+          @blur="handlerTextBlur"
         />
     </div>
     <div 
@@ -13,7 +16,12 @@
       v-show="keyword"
     >
       <ul>
-        <li class="search-item border-bottom" v-for="item of list" :key="item.id">
+        <li 
+          class="search-item border-bottom" 
+          v-for="item of list" 
+          :key="item.id"
+          @click="handlerCityClick(item.name)"
+        >
           {{item.name}}
         </li>
         <li class="search-item border-bottom" v-show="!this.list.length">
@@ -33,11 +41,14 @@ export default {
   },
   mounted (){
     setTimeout(() =>{
-      this.scroll = new Bscroll(this.$refs.search)
+      this.scroll = new Bscroll(this.$refs.search,{
+        click:true
+      })
     })
   },
   data (){
     return {
+      placeholder:'输入城市名或拼音',
       keyword:'',
       list: [],
       timer: null
@@ -59,6 +70,19 @@ export default {
         }
         this.list = result
       },100)
+    }
+  },
+  methods: {
+    handlerCityClick (city){
+      this.$store.commit('change',city)
+      this.$router.push('/')
+      this.keyword = ''
+    },
+    handlerTextFocus (){
+      this.placeholder = ''
+    },
+    handlerTextBlur (){
+      this.placeholder = '输入城市名或拼音'
     }
   }
 }
