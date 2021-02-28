@@ -2,6 +2,7 @@ const express = require('express')
 const app  = express()
 var index = require('./static/index.json')
 var city = require('./static/city.json')
+var detail = require('./static/detail.json')
 var apiRoutes = express.Router()
 app.use('/api',apiRoutes)
 module.exports = {
@@ -18,6 +19,12 @@ module.exports = {
                 res.json({
                     errno:0,
                     data:city
+                })
+            })
+            app.get('/api/detail',(req,res) =>{
+                res.json({
+                    errno:0,
+                    data:detail
                 })
             })
         }

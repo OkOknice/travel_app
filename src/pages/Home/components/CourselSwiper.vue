@@ -18,11 +18,10 @@ export default {
   data (){
       return {
           swiperOptions:{
-              pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-              },
+              pagination:'.swiper-pagination',
               loop: true,
+              clickable: true,
+              paginationType: 'bullets',
           }
       }
   },
